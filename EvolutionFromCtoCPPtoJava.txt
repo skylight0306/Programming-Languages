@@ -1,0 +1,426 @@
+# include <cstdio>
+# include <iostream>
+using namespace std ;
+
+/*
+
+此檔案含六段程式碼：Version 1、Version 2、...、Version 5、Java version。
+
+你可以把本檔案的內容直接copy與paste到一個C++的執行環境中去編譯與run。
+
+要uncomment一段程式碼，就在 '\' '*'(與'*' '/')之前加雙斜線('/' '/')。
+要回復為comment，就把'\' '*'(與'*' '/')之前的雙斜線拿掉。
+這就是夏氏公司使用大註解('\' '*'(與'*' '/'))的方式(即：註解掉整段程式碼)。
+真正的註解是用line comment(即：先雙斜線、之後是文字)的方式來寫。
+
+Version 1的重點:
+
+  struct可以有自己的function。當一個struct的(自有)function被呼叫時，
+  此(該struct的自有)function當然可以存取該struct的欄位。
+
+  注意：由於C/C++的特性，所以可以同時有'Student s1 ;'版與
+        'Student * p1 = new Student ;'版，效果相同。(不過，在記憶體
+        中所存放的位置會不一樣)
+
+Version 2的重點:
+
+  若把'struct'這個字改為'class'，結果也一樣。不過，要加'public:'字樣。
+
+Version 3的重點:
+
+  可以透過struct的自有function來設定struct的欄位！ 好處是：可以檢查
+  此設定值的合理性。
+
+  不過新的問題來了：如何防止"外人"(即：非此struct的自有function)直接
+                    存取此struct的欄位？ 也就是說：如何能做到
+                    「只有此struct的自有function可存取此struct的欄位」？
+                    (這是個資料保護的概念，當bug發生時應有人負責才對)
+
+Version 4的重點:
+
+   解決Version 3所提出的問題的辦法是：將欄位(以「加'private'字樣」
+                                      的方式)列入保護。
+
+   'private'之意：外人(非struct自有function者)不能存取
+   'public'之意：所有人(所有function)皆可存取
+
+Version 5的重點:
+
+   「拿掉'struct'版、只留下'class'版」的結果。
+
+Java version的重點:
+
+   Java是C/C++的「class版的pointer做法」。
+
+*/
+
+/*
+
+// Java version ------------------------------------------------------------------
+
+package BCC107_10727388 ;
+
+// import java.lang.* ;
+
+class Learner {
+
+  // default scope: package
+
+  bool SetScore( int score ) {
+
+    if ( score < 0 || 100 < score )
+      return false ;
+    else if ( score >= 60 )
+      mLevel = 1 ;
+    else
+      mLevel = 2 ;
+
+    mScore = score ;
+    return true ;
+
+  } // SetScope()
+
+  int Level() { 
+    return mLevel ;
+  } // Level()
+
+  private:
+
+    int mScore;
+    int mLevel ;
+
+} // class Learner
+
+class Main {
+
+  public static void main( String[] args ) throws Throwable {
+
+    System.out.print( "Java version \n" ) ;
+
+    Learner q1 = new Learner() ;
+    Learner q2 = new Learner() ;
+
+    q1.SetScore( 40 ) ; // cannot do q1.mScore = 70 and q1.mLevel = 2
+
+    System.out.println( "Level of q1 is : " + q1.Level() ) ;
+  
+  } // main()
+
+} // class Main
+
+// Java version
+*/
+
+// /*
+
+// Version 5 ------------------------------------------------------------------
+
+class Learner {
+  int mScore;
+  int mLevel ;
+
+  public:
+  bool SetScore( int score ) ;
+  int Level() ;
+} ; // class Learner
+
+int Learner::Level() {
+  return mLevel ;
+} // Learner::Level()
+
+bool Learner::SetScore( int score ) {
+  if ( score < 0 || 100 < score )
+    return false ;
+  else if ( score >= 60 )
+    mLevel = 1 ;
+  else
+    mLevel = 2 ;
+
+  mScore = score ;
+  return true ;
+} // Learner::SetScore()
+
+int main() {
+  cout << "Version 5 \n" ;
+
+  Learner e1, e2 ;
+
+  e1.SetScore( 80 ) ; // cannot do e1.mScore = 80 and e1.mLevel = 2
+
+  cout << "Level of e1 is : " << e1.Level() << "\n" ;
+  
+  Learner * q1 = new Learner ;
+  Learner * q2 = new Learner ;
+
+  q1->SetScore( 40 ) ; // cannot do q1->mScore = 70 and q1->mLevel = 2
+
+  cout << "Level of q1 is : " << q1->Level() << "\n" ;
+  
+} // main()
+
+// Version 5
+// */
+
+/*
+
+// Version 4 ------------------------------------------------------------------
+
+struct Student {
+  private:
+  int score ;
+  int level ;
+
+  public:
+  bool SetScore( int newScore ) ;
+  int Level() ;
+} ; // struct Student
+
+int Student::Level() {
+  return level ;
+} // Student::Level()
+
+bool Student::SetScore( int newScore ) {
+  if ( newScore < 0 || 100 < newScore )
+    return false ;
+  else if ( score >= 60 )
+    level = 1 ;
+  else
+    level = 2 ;
+
+  score = newScore ;
+  return true ;
+} // Student::SetScore()
+
+class Learner {
+  int mScore;
+  int mLevel ;
+
+  public:
+  bool SetScore( int score ) ;
+  int Level() ;
+} ; // class Learner
+
+int Learner::Level() {
+  return mLevel ;
+} // Learner::Level()
+
+bool Learner::SetScore( int score ) {
+  if ( score < 0 || 100 < score )
+    return false ;
+  else if ( score >= 60 )
+    mLevel = 1 ;
+  else
+    mLevel = 2 ;
+
+  mScore = score ;
+  return true ;
+} // Learner::SetScore()
+
+int main() {
+  cout << "Version 4 \n" ;
+
+  Student s1, s2 ;
+  Learner e1, e2 ;
+
+  s1.SetScore( 70 ) ; // cannot do s1.score = 70 and s1.level = 2
+  e1.SetScore( 80 ) ; // cannot do e1.mScore = 80 and e1.mLevel = 2
+
+  cout << "Level of s1 is : " << s1.Level() << "\n" ;
+  cout << "Level of e1 is : " << e1.Level() << "\n" ;
+  
+  Student * p1 = new Student ;
+  Student * p2 = new Student ;
+  Learner * q1 = new Learner ;
+  Learner * q2 = new Learner ;
+
+  p1->SetScore( 50 ) ; // cannot do p1->score = 70 and p1->level = 2
+  q1->SetScore( 40 ) ; // cannot do q1->mScore = 70 and q1->mLevel = 2
+
+  cout << "Level of p1 is : " << p1->Level() << "\n" ;
+  cout << "Level of q1 is : " << q1->Level() << "\n" ;
+  
+} // main()
+
+// Version 4
+*/
+
+/*
+
+// Version 3 ------------------------------------------------------------------
+
+struct Student {
+  int score ;
+  int level ;
+  bool SetScore( int newScore ) ;
+  int Level() ;
+} ; // struct Student
+
+int Student::Level() {
+  return level ;
+} // Student::Level()
+
+bool Student::SetScore( int newScore ) {
+  if ( newScore < 0 || 100 < newScore )
+    return false ;
+  else if ( score >= 60 )
+    level = 1 ;
+  else
+    level = 2 ;
+
+  score = newScore ;
+  return true ;
+} // Student::SetScore()
+
+class Learner {
+  public:
+  int mScore;
+  int mLevel ;
+  bool SetScore( int score ) ;
+  int Level() ;
+} ; // class Learner
+
+int Learner::Level() {
+  return mLevel ;
+} // Learner::Level()
+
+bool Learner::SetScore( int score ) {
+  if ( score < 0 || 100 < score )
+    return false ;
+  else if ( score >= 60 )
+    mLevel = 1 ;
+  else
+    mLevel = 2 ;
+
+  mScore = score ;
+  return true ;
+} // Learner::SetScore()
+
+int main() {
+  cout << "Version 3 \n" ;
+
+  Student s1, s2 ;
+  Learner e1, e2 ;
+
+  s1.SetScore( 70 ) ; // but how about s1.score = 70 and s1.level = 2 ?
+  e1.SetScore( 80 ) ; // but how about e1.mScore = 80 and e1.mLevel = 2 ?
+
+  cout << "Level of s1 is : " << s1.Level() << "\n" ;
+  cout << "Level of e1 is : " << e1.Level() << "\n" ;
+  
+  Student * p1 = new Student ;
+  Student * p2 = new Student ;
+  Learner * q1 = new Learner ;
+  Learner * q2 = new Learner ;
+
+  p1->SetScore( 50 ) ; // similar concern as the above
+  q1->SetScore( 40 ) ; // similar concern as the above
+
+  cout << "Level of p1 is : " << p1->Level() << "\n" ;
+  cout << "Level of q1 is : " << q1->Level() << "\n" ;
+  
+} // main()
+
+// Version 3
+*/
+
+/*
+
+// Version 2 ------------------------------------------------------------------
+
+// do the same thing as Version 1, but change the word 'struct' to the word 'class' ;
+
+struct Student {
+  int score ;
+  int level ;
+  int Level() ;
+} ; // struct Student
+
+int Student::Level() {
+  return level ;
+} // Student::Level()
+
+class Learner {
+  public:
+  int mScore;
+  int mLevel ;
+  int Level() ;
+} ; // class Learner
+
+int Learner::Level() {
+  return mLevel ;
+} // Learner::Level()
+
+int main() {
+
+  cout << "Version 2 \n" ;
+
+  Student s1, s2 ;
+  Learner e1, e2 ;
+
+  s1.score = 70 ;
+  s1.level = 1 ;
+  e1.mScore = 80 ;
+  e1.mLevel = 1 ;
+
+  cout << "Level of s1 is : " << s1.Level() << "\n" ;
+  cout << "Level of e1 is : " << e1.Level() << "\n" ;
+  
+  Student * p1 = new Student ;
+  Student * p2 = new Student ;
+  Learner * q1 = new Learner ;
+  Learner * q2 = new Learner ;
+
+  p1->score = 50 ;
+  p1->level = 2 ;
+  q1->mScore = 40 ;
+  q1->mLevel = 2 ;
+
+  cout << "Level of p1 is : " << p1->Level() << "\n" ;
+  cout << "Level of q1 is : " << q1->Level() << "\n" ;
+  
+} // main()
+
+// Version 2
+*/
+
+/*
+
+// Version 1 ------------------------------------------------------------------
+
+// a struct can have its own functions ;
+// when calling the function of a struct, this function can reference
+// and/or set the fields of the struct ;
+
+struct Student {
+  int score ;
+  int level ;
+  int Level() ;
+} ; // struct Student
+
+int Student::Level() {
+  return level ;
+} // Student::Level()
+
+int main() {
+
+  cout << "Version 1 \n" ;
+
+  Student s1, s2 ;
+
+  s1.score = 70 ;
+  s1.level = 1 ;
+
+  cout << "Level of s1 is : " << s1.Level() << "\n" ;
+  
+  Student * p1 = new Student ;
+  Student * p2 = new Student ;
+
+  p1->score = 50 ;
+  p1->level = 2 ;
+
+  cout << "Level of p1 is : " << p1->Level() << "\n" ;
+  
+} // main()
+
+// Version 1
+*/
