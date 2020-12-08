@@ -1,0 +1,13 @@
+＊期中考 20%
+＊期末考 25%
+＊Projects 70% (10+15+20+25)   Copy的認定： 約10%的copy就視為copy
+＊平時 5% 依全班平均表現
+
+＊凡點名不到者扣總分2的n-1次方分，n為點名不到次數(若補到、則以0.5次計)。
+＊凡穿拖鞋者每次都是扣總分一分。(「每次」 df= 每個被抓到穿拖鞋的上課日 )
+＊期末不加分。
+
+Textbook: Concepts of Programming Languages by Robert Sebesta 10th/11th Ed.
+ISBN: 978-0-273-76910-1  or   0-273-76910-3
+
+BBS: telnet://140.135.11.30  PL版：CS.Language     置底文
