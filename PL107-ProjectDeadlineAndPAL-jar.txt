@@ -1,0 +1,25 @@
+1. Project due date is 2019-06-23 (Sun.) at midnight. // Not 2019-06-25 (Sun.)
+
+2. If your Windows 8/10/... fails to run PAL-2017-01-30-1-2.exe, it may be because the JDK/JRE your Windows OS is using is incompatible with the old version of JDK with which PAL-2017-01-30-1-2.exe was built with. Therefore, when your Windows 8/10/... does not execute PAL-2017-01-30-1-2.exe smoothly, you need to run PAL-2017-01-30-1-2.jar using java.exe of JDK/JRE 6uX. (For some unknown reason, java.exe of JRE 6uX is better than java.exe of JDK 6uX. So, please use java.exe of JRE 6uX to run PAL-2017-01-30-1-2.jar.)
+
+3. To run PAL-2017-01-30-1-2.jar using java.exe of JDK/JRE 6uX, you need to do something similar to what is said in Visual-C之安裝與使用.doc. Please consult what is said in Visual-C之安裝與使用.doc when you try to run  PAL-2017-01-30-1-2.jar using java.exe of JRE 6uX.
+
+4. I do not know why I cannot upload my JRE6u1 to i-learning. For the moment, I can only put one copy of it in Google cloud. That is, you should be able to download my JRE6u1 at https://drive.google.com/file/d/0B8eW1eT4AMoLTmdWRW5HQ1M5MjA/view?usp=sharing The problem with this link is that if too many people try to download it at the same time, Google may block it. Note that you can always find JDE/JRE 6uX from the official Java Web site, now managed by Oracle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
