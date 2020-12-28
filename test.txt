@@ -1,0 +1,9 @@
+(  
+ 56 )
+123
++123   -123  "eijf ijie\n"
+"eijeif
+  nil  #f    123.567   123.  .567
+		+123.4	  -.123   ;   eijeif sieufo
+  '    t   #t ;    fjiefj
+ eji  123.a
